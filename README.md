@@ -10,7 +10,7 @@ This addon is intentionally a local metrics utility, not a telemetry transport l
 `gdpm install @aviorstudio/gd-metrics`
 
 ### Manual
-Copy this directory into `addons/@aviorstudio_gd-metrics/` and enable the plugin.
+Copy `addon/` into `addons/@aviorstudio_gd-metrics/` and enable the plugin.
 
 ## Quick Start
 
