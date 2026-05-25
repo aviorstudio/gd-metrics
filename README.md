@@ -1,16 +1,18 @@
 # gd-metrics
 
-In-memory metrics and timing helpers for Godot 4.
+Collect local timing and count samples in Godot 4.
 
-This addon is intentionally a local metrics utility, not a telemetry transport layer.
+Use this addon to measure slow systems, summarize timings, and inspect performance behavior before you decide whether to send anything to a telemetry service.
 
 ## Installation
 
 ### Via gdpm
+
 `gdpm install @aviorstudio/gd-metrics`
 
 ### Manual
-Copy `addon/` into `addons/@aviorstudio_gd-metrics/` and enable the plugin.
+
+Copy `addon/` into `res://addons/@aviorstudio_gd-metrics/` and enable the plugin.
 
 ## Quick Start
 
@@ -19,24 +21,27 @@ const MetricsModule = preload("res://addons/@aviorstudio_gd-metrics/src/metrics_
 
 var metrics := MetricsModule.new()
 metrics.configure(MetricsModule.MetricsConfig.new(true, 500))
+
 var start_usec: int = metrics.begin_timer(true)
+_run_expensive_step()
 metrics.record("CombatService", "resolve", Time.get_ticks_usec() - start_usec)
+
+print(metrics.get_summary("CombatService", "resolve"))
 ```
 
-## API Reference
+## What You Get
 
-- `MetricsConfig`: enable flag and max sample limit.
-- `record`, `begin_timer`, `finish_void`, `finish_array`: timed capture helpers.
-- `get_summary`, `get_all_summaries`: aggregate percentiles and totals.
+- `MetricsConfig`: enable sampling and cap retained samples.
+- `begin_timer`: start a microsecond timer.
+- `record`: add a timing/sample manually.
+- `finish_void` / `finish_array`: helper wrappers for timed callables.
+- `get_summary` / `get_all_summaries`: totals, averages, and percentile summaries.
 
-## Scope Boundary
+## Notes
 
-- In scope: in-process timing/sample collection and summary aggregation.
-- Out of scope: network shipping, batching policy, and remote ingestion orchestration.
-
-## Configuration
-
-No project settings are required.
+- No project settings are required.
+- Metrics are in-memory only.
+- Pair this with `gd-telemetry` if you want to flush summarized data elsewhere.
 
 ## Testing
 
