@@ -6,9 +6,9 @@ Use this addon to measure slow systems, summarize timings, and inspect performan
 
 ## Installation
 
-### Via gdpm
+### Via gdam
 
-`gdpm install @aviorstudio/gd-metrics`
+`gdam install @aviorstudio/gd-metrics`
 
 ### Manual
 
