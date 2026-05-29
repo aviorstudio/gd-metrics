@@ -12,7 +12,7 @@ Use this addon to collect gameplay timings, gauges, counters, Godot runtime stat
 
 ### Manual
 
-Copy `addon/` into `res://addons/@aviorstudio_gd-observe/` and enable the plugin.
+Copy `gd/addon/` into `res://addons/@aviorstudio_gd-observe/` and enable the plugin.
 
 The plugin registers a `GdObserve` autoload when enabled.
 
@@ -219,7 +219,7 @@ Useful `GdObserve` methods include `push_context()`, `pop_context()`, `context_t
 
 ## Testing
 
-`./tests/test.sh`
+`./gd/tests/test.sh`
 
 ## License
 
