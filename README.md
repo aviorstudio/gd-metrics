@@ -98,6 +98,8 @@ Machine-readable modes:
 
 ```sh
 cli/bin/gdobs snapshot --url ws://127.0.0.1:8765
+cli/bin/gdobs snapshot --env godot_client/.env.json
+cli/bin/gdobs status --project .
 cli/bin/gdobs snapshot --kind timer --path-prefix CardPresentation --sort p95 --limit 20
 cli/bin/gdobs stream --url ws://127.0.0.1:8765
 cli/bin/gdobs status --url ws://127.0.0.1:8765
@@ -109,6 +111,8 @@ cli/bin/gdobs capture --duration 30s --out artifacts/run-001
 cli/bin/gdobs top timers --file artifacts/run-001/snapshot.json --sort p95 --limit 20
 cli/bin/gdobs diff before.json after.json
 ```
+
+Endpoint resolution order is explicit URL first, then project/env discovery, then `ws://127.0.0.1:8765`. Use `--env path/to/.env.json` or `--project path/to/repo` when running multiple games locally. Supported env keys are `metrics_live_server_url`, or `metrics_live_server_host` plus `metrics_live_server_port`; `.env` files may also use `GDOBS_URL`, or `GDOBS_HOST` plus `GDOBS_PORT`.
 
 The WebSocket protocol is read-only from the CLI perspective. Godot streams `hello`, periodic lightweight `snapshot`, explicit `log`, explicit `event`, and timer-generated `frame_trace` messages. Clients may send `snapshot_request` messages to request filtered read-only snapshots; these do not mutate game state.
 
