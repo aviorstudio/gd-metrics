@@ -217,9 +217,35 @@ Useful `GdObserve` methods include `push_context()`, `pop_context()`, `context_t
 - Logs, events, and traces are stream-oriented; connected tools keep their own history.
 - The live server is intended for local development/debug builds.
 
+## Repository Layout
+
+- `gd/addon/`: Godot plugin source packaged for GDAM and manual installation.
+- `gd/addon/plugin.cfg`: plugin name, version, description, and entry script.
+- `gd/addon/src/`: metrics, runtime sampling, live server, and autoload GDScript modules.
+- `gd/tests/`: Godot test project/scripts for addon behavior.
+- `cli/`: Go command-line tools for watching, capturing, asserting, and diffing live metric streams.
+- `.github/workflows/ci.yml`: runs Godot addon tests and Go CLI tests.
+- `.github/workflows/release.yml`: creates addon and CLI GitHub releases.
+
+## Versioning And Releases
+
+This repo has two release targets:
+
+- `gd`: uses `gd-v*` tags, verifies `gd/addon/plugin.cfg`, builds `@aviorstudio_gd-observe.zip`, and publishes `@aviorstudio/gd-observe` to GDAM.
+- `cli`: uses `cli-v*` tags, runs Go tests, builds `gd-observe` binaries for Linux, macOS, and Windows, and attaches checksums.
+
+The Godot addon version lives in `gd/addon/plugin.cfg`. The release workflow is manual and must be run from `main` with a `patch`, `minor`, or `major` bump.
+
 ## Testing
 
-`./gd/tests/test.sh`
+Run locally with:
+
+```sh
+./gd/tests/test.sh
+cd cli && go test ./...
+```
+
+CI runs both test suites.
 
 ## License
 
