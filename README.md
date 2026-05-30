@@ -97,17 +97,17 @@ The TUI is mouse-first. Use the top tabs for `Dashboard`, `Logs`, `Events`, and 
 Machine-readable modes:
 
 ```sh
-cli/bin/gd-observe snapshot --url ws://127.0.0.1:8765
-cli/bin/gd-observe snapshot --kind timer --path-prefix CardPresentation --sort p95 --limit 20
-cli/bin/gd-observe stream --url ws://127.0.0.1:8765
-cli/bin/gd-observe status --url ws://127.0.0.1:8765
-cli/bin/gd-observe wait --for event --name match.route_loaded --timeout 10s
-cli/bin/gd-observe assert --metric BoardVisualService.hex_screen_resolve --max-p95-usec 16666
-cli/bin/gd-observe assert --budget metrics-budget.json
-cli/bin/gd-observe diagnose --url ws://127.0.0.1:8765
-cli/bin/gd-observe capture --duration 30s --out artifacts/run-001
-cli/bin/gd-observe top timers --file artifacts/run-001/snapshot.json --sort p95 --limit 20
-cli/bin/gd-observe diff before.json after.json
+cli/bin/gdobs snapshot --url ws://127.0.0.1:8765
+cli/bin/gdobs snapshot --kind timer --path-prefix CardPresentation --sort p95 --limit 20
+cli/bin/gdobs stream --url ws://127.0.0.1:8765
+cli/bin/gdobs status --url ws://127.0.0.1:8765
+cli/bin/gdobs wait --for event --name match.route_loaded --timeout 10s
+cli/bin/gdobs assert --metric BoardVisualService.hex_screen_resolve --max-p95-usec 16666
+cli/bin/gdobs assert --budget metrics-budget.json
+cli/bin/gdobs diagnose --url ws://127.0.0.1:8765
+cli/bin/gdobs capture --duration 30s --out artifacts/run-001
+cli/bin/gdobs top timers --file artifacts/run-001/snapshot.json --sort p95 --limit 20
+cli/bin/gdobs diff before.json after.json
 ```
 
 The WebSocket protocol is read-only from the CLI perspective. Godot streams `hello`, periodic lightweight `snapshot`, explicit `log`, explicit `event`, and timer-generated `frame_trace` messages. Clients may send `snapshot_request` messages to request filtered read-only snapshots; these do not mutate game state.
@@ -232,7 +232,7 @@ Useful `GdObserve` methods include `push_context()`, `pop_context()`, `context_t
 This repo has two release targets:
 
 - `gd`: uses `gd-v*` tags, verifies `gd/addon/plugin.cfg`, builds `@aviorstudio_gd-observe.zip`, and publishes `@aviorstudio/gd-observe` to GDAM.
-- `cli`: uses `cli-v*` tags, runs Go tests, builds `gd-observe` binaries for Linux, macOS, and Windows, and attaches checksums.
+- `cli`: uses `cli-v*` tags, runs Go tests, builds `gdobs` binaries for Linux, macOS, and Windows, and attaches checksums.
 
 The Godot addon version lives in `gd/addon/plugin.cfg`. The release workflow is manual and must be run from `main` with a `patch`, `minor`, or `major` bump.
 
