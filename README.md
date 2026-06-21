@@ -18,6 +18,27 @@ The plugin registers a `GdObserve` autoload when enabled.
 
 ## Quick Start
 
+For editor-first projects, add an `ObserveBootstrap` node to your app shell scene and assign resource configs:
+
+```text
+Main
+  ObserveBootstrap
+    metrics_config = res://addons/@aviorstudio_gd-observe/presets/debug_observe_config.tres
+    live_server_config = res://addons/@aviorstudio_gd-observe/presets/debug_live_server_config.tres
+    live_server_mode = DEBUG_NON_WEB
+    context_tags = { "game": "my_game" }
+```
+
+`ObserveBootstrap` configures the `GdObserve` autoload on scene ready, applies shared context tags, can start the live server in debug builds, and reads optional `gdobs_host` / `gdobs_port` overrides from `res://.env.json`.
+
+An installable example scene is included at:
+
+```text
+res://addons/@aviorstudio_gd-observe/examples/app_shell/observe_example_main.tscn
+```
+
+Script-only setup still works:
+
 ```gdscript
 func _ready() -> void:
 	GdObserve.configure(MetricsModule.MetricsConfig.new(true, 500))
@@ -225,7 +246,9 @@ Useful `GdObserve` methods include `push_context()`, `pop_context()`, `context_t
 
 - `gd/addon/`: Godot plugin source packaged for GDAM and manual installation.
 - `gd/addon/plugin.cfg`: plugin name, version, description, and entry script.
-- `gd/addon/src/`: metrics, runtime sampling, live server, and autoload GDScript modules.
+- `gd/addon/src/`: metrics, runtime sampling, live server, editor resources, bootstrap node, and autoload GDScript modules.
+- `gd/addon/presets/`: ready-to-use observe and live-server config resources.
+- `gd/addon/examples/`: editor-first example scenes.
 - `gd/tests/`: Godot test project/scripts for addon behavior.
 - `cli/`: Go command-line tools for watching, capturing, asserting, and diffing live metric streams.
 - `.github/workflows/ci.yml`: runs Godot addon tests and Go CLI tests.
@@ -245,8 +268,8 @@ The Godot addon version lives in `gd/addon/plugin.cfg`. The release workflow is 
 Run locally with:
 
 ```sh
-./gd/tests/test.sh
-cd cli && go test ./...
+mise exec -- ./gd/tests/test.sh
+cd cli && mise exec -- go test ./...
 ```
 
 CI runs both test suites.
