@@ -104,7 +104,7 @@ jobs:
           if [ -d gd/addon/examples ]; then cp -R gd/addon/examples "$package_root/"; fi
           (cd "$package_root" && zip -r "${GITHUB_WORKSPACE}/dist/${addon_dir}.zip" .)
 
-      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         if: inputs.target == 'cli'
         with:
           go-version-file: cli/go.mod
